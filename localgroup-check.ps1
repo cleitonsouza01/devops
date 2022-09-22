@@ -4,7 +4,7 @@
     .Description
         Check Administrators group in a remote machine and set default members
     .Example
-        powershell localgroup-check.ps1
+        powershell localgroup-check.ps1 DESKTOP07
 #>
 
 Write-Host -ForegroundColor Green "*** LOCALGROUP ADMINISTRATORS CHECK APP ***"
@@ -14,7 +14,6 @@ if ($args.Count -eq 0) {
     Write-Host "You need to add remote machine hostname"
     continue
 }
-
 
 $remote_host = $args[0]
 
@@ -48,13 +47,7 @@ catch {
 foreach($member in $admin_members_approved) {
     $null = $t.Add($member.toUpper())
 }
-
 $admin_members_approved = $t.Clone()
-
-foreach($member in $admin_members_approved) {
-    Write-Host $member $member.Length 
-}
-
 
 # Process information
 Write-Host -ForegroundColor Green Processing...
@@ -69,11 +62,6 @@ foreach ($remote_member in $remote_group_members) {
     $member = $member.Replace('\', '')
     $member = $member.Trim()
     $member = $member.toUpper()
-    # $member = $remote_member.Name.Split('\')[1]
-    # $member = [regex]::Escape($member)
-    # $member = $member.Replace('\r\n', '')
-    # $u=$member.Replace('\', '')
-    Write-Host $member $member.Length 
     if ($admin_members_approved -match $member) {
         Write-Progress -Activity "Processing $member"
         $null = $admin_members_approved_to_add.Remove($member)
@@ -85,9 +73,7 @@ foreach ($remote_member in $remote_group_members) {
     }
 }
 
-
 Write-Host ""
-
 
 # Add allowed members that is not in remote group
 if($admin_members_approved_to_add.Count -gt 0) {   
