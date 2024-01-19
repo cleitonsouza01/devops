@@ -16,7 +16,7 @@ Remember, the `.env` file should never be committed to the version control syste
 
 Included in this repository is a PowerShell script (test-env.ps1) that checks the readability and format of your .env file. Simply run 
 ``` 
-powershell test-env.ps1
+powershell .\test-env.ps1
 ```
  to use it. The script will confirm if your .env file is correctly set up, with results displayed as shown below:
 
