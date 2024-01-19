@@ -24,7 +24,7 @@ $credential = Get-Credential -Credential "$ADMIN_USERNAME"
 function Log-Message {
     Param (
         [string]$Message,
-        [string]$FilePath = $outputFilePath
+        [string]$FilePath = $logFilePath
     )
     Write-Host $Message
     Add-Content -Path $FilePath -Value "$(Get-Date -Format "HH:mm:ss"): $Message" -Encoding UTF8
